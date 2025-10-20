@@ -66,13 +66,15 @@ create_moonraker_venv() {
 
     ./moonraker-env/bin/pip \
         install \
+        --prefer-binary \
         --upgrade \
         --find-links=${SCRIPT_DIR}/wheels \
         --requirement moonraker/scripts/moonraker-requirements.txt
 
     ./moonraker-env/bin/pip \
         install \
-        lmdb
+        --prefer-binary \
+        lmdb==1.7.3
 
     python3 ${SCRIPT_DIR}/../../scripts/fix_venv.py ~/moonraker-env
 }
