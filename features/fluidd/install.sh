@@ -1,6 +1,8 @@
 #!/bin/ash
 set -e
 
+SCRIPT_DIR=$(readlink -f $(dirname ${0}))
+
 # DEPENDS: moonraker
 if [ ! -f /mnt/UDISK/root/printer_data/config/moonraker.conf ]; then
     echo "E: you must have updated moonraker first!"
@@ -8,7 +10,6 @@ if [ ! -f /mnt/UDISK/root/printer_data/config/moonraker.conf ]; then
 fi
 
 cd ${HOME}
-SCRIPT_DIR=$(readlink -f $(dirname ${0}))
 
 # MUST have Entware installed
 if [ ! -f /opt/bin/opkg ]; then
@@ -29,7 +30,7 @@ rm -fr fluidd
 
 mkdir -p fluidd
 cd fluidd
-python3 ${SCRIPT_DIR}/get_latest_release.py jamincollins/fluidd
+python3 ${SCRIPT_DIR}/get_latest_release.py Jacob10383/fluidd
 unzip fluidd.zip
 rm -f fluidd.zip
 cd ..
