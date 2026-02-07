@@ -128,7 +128,7 @@ def stop_services():
         _cartographer_service_exists = False
     
     try:
-        subprocess.run(["killall", "usb_bridge"], capture_output=True, timeout=5)
+        subprocess.run(["killall", "usb_bridge_new"], capture_output=True, timeout=5)
     except (FileNotFoundError, subprocess.TimeoutExpired):
         pass
     
@@ -509,20 +509,20 @@ def prompt_firmware(mcu: str, proto_str: str, fw_version: Optional[str] = None) 
         device_name = "Cartographer V4"
         device_chip = "STM32G431"
         options = [
-            ("1", "V4 6.0.0 Lite", "Recommended for K2", 
-             script_dir / "firmware" / "CartographerV4_6.0.0_USB_lite_8kib_offset.bin"),
-            ("2", "V4 6.0.0 Full", "2x sampling rate",
+            ("1", "V4 6.0.0 Full", "Recommended for K2 (2x sampling rate)",
              script_dir / "firmware" / "CartographerV4_6.0.0_USB_full_8kib_offset.bin"),
+            ("2", "V4 6.0.0 Lite", "Fallback for timing issues / conservative setup",
+             script_dir / "firmware" / "CartographerV4_6.0.0_USB_lite_8kib_offset.bin"),
             ("3", "Abort", "Exit bootloader mode", None),
         ]
     elif mcu == "stm32f042x6":
         device_name = "Cartographer V3 / Survey"
         device_chip = "STM32F042"
         options = [
-            ("1", "K1 5.1.0 (Lite)", "Recommended for K2",
-             script_dir / "firmware" / "Survey_Cartographer_K1_USB_8kib_offset.bin"),
-            ("2", "5.1.0 (Full)", "2x sampling rate",
+            ("1", "5.1.0 (Full)", "Recommended for K2 (2x sampling rate)",
              script_dir / "firmware" / "Survey_Cartographer_USB_8kib_offset.bin"),
+            ("2", "K1 5.1.0 (Lite)", "Fallback for timing issues / conservative setup",
+             script_dir / "firmware" / "Survey_Cartographer_K1_USB_8kib_offset.bin"),
             ("3", "Abort", "Exit bootloader mode", None),
         ]
     else:
@@ -871,4 +871,3 @@ def _main_inner(args):
 
 if __name__ == '__main__':
     sys.exit(main())
-

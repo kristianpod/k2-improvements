@@ -25,14 +25,13 @@ from cartographer.extra import *
 EOF
 
 # check if native USB ACM support is built into kernel
-# skip all usb handling(bridge, wrapper, service) if so
+# skip all usb handling (bridge, service) if so
 if ! zcat /proc/config.gz 2>/dev/null | grep -q "CONFIG_USB_ACM=y"; then
-    # install usb bridge and wrapper
+    # install usb bridge binary
     mkdir -p /mnt/UDISK/bin
-    ln -sf ${SCRIPT_DIR}/usb_bridge /mnt/UDISK/bin/usb_bridge
-    chmod +x /mnt/UDISK/bin/usb_bridge
-    ln -sf ${SCRIPT_DIR}/usb_bridge_wrapper.sh /mnt/UDISK/bin/cartographer_wrapper.sh
-    chmod +x /mnt/UDISK/bin/cartographer_wrapper.sh
+    ln -sf ${SCRIPT_DIR}/usb_bridge_new /mnt/UDISK/bin/usb_bridge_new
+    chmod +x /mnt/UDISK/bin/usb_bridge_new
+    rm -f /mnt/UDISK/bin/cartographer_wrapper.sh /mnt/UDISK/bin/usb_bridge
 
     # install service
     ln -sf ${SCRIPT_DIR}/cartographer.init /etc/init.d/cartographer
@@ -80,4 +79,3 @@ fi
 
 echo "I: restarting klipper"
 /etc/init.d/klipper restart
-

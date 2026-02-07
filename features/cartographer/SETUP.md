@@ -2,9 +2,13 @@
 
 ## Firmware
 
-The Cartographer **MUST** be flashed with the special K1 firmware.
+Use the full firmware by default; it has been tested to work well with the new Cartographer plugin and the new USB bridge.
 
-The instructions and script for doing so can be found [here](./firmware/README.md)
+It runs at 2x the sampling rate of K1/lite, so it is generally the better option.
+
+K1/lite is still available as a fallback if you see timing issues (for example TRSYNC errors/timeouts), or if you just want a more conservative setup.
+
+Flashing instructions are available [here](./firmware/README.md).
 
 ## Print Mount and spacers for K2
 
