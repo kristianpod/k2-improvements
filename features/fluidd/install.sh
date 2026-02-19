@@ -3,6 +3,14 @@ set -e
 
 SCRIPT_DIR=$(readlink -f $(dirname ${0}))
 
+# Parse arguments
+SKIP_CAM=0
+for arg in "$@"; do
+    case "$arg" in
+        --nocam) SKIP_CAM=1 ;;
+    esac
+done
+
 # DEPENDS: moonraker
 if [ ! -f /mnt/UDISK/root/printer_data/config/moonraker.conf ]; then
     echo "E: you must have updated moonraker first!"
@@ -49,6 +57,8 @@ python3 ~/k2-improvements/scripts/moonraker_include.py updates/fluidd.cfg
 # TODO: should this should be gated on a port check?
 # wait for everything to be ready
 sleep 5
-python3 ${SCRIPT_DIR}/create_camera.py
+if [ "${SKIP_CAM}" -eq 0 ]; then
+    python3 ${SCRIPT_DIR}/create_camera.py
+fi
 
 /etc/init.d/moonraker restart
